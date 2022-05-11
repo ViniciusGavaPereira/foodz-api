@@ -19,7 +19,6 @@ import lombok.NoArgsConstructor;
 public class Produto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id_produto")
     private Integer idProduto;
 
@@ -40,6 +39,5 @@ public class Produto {
 
     @Column(name = "Lote")
     private String lote;
-
 
 }

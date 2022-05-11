@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -27,6 +28,20 @@ public class ControllerProduto {
     @GetMapping(path = "/buscarTudo")
     public List<Produto> listarTodos() {
         return repositorioProduto.findAll();
+
+    }
+
+    @GetMapping(path = "/buscarNome")
+    public List<Produto> findByProduto(String produto) {
+        System.out.println(produto);
+        return repositorioProduto.findByProduto(produto);
+
+    }
+
+    @GetMapping(path = "/buscarID")
+    public int findIdProduto() {
+        var resp = repositorioProduto.findByIdProduto();
+        return resp + 1;
 
     }
 
@@ -71,5 +86,9 @@ public class ControllerProduto {
         }
 
     }
+
+    // @GetMapping(path = "/buscarUltimoID")
+    // public List<Produto> listarUltimoID()
+    // return repositorioProduto.proximoId();
 
 }
