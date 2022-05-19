@@ -1,9 +1,10 @@
 package com.example.demo.entity;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -29,7 +30,7 @@ public class Produto {
     private int quantidade;
 
     @Column(name = "Validade")
-    private String validade;
+    private Date validade;
 
     @Column(name = "Custo")
     private double custo;

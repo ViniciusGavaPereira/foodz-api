@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -26,8 +25,8 @@ public class ControllerProduto {
     private RepositorioProduto repositorioProduto;
 
     @GetMapping(path = "/buscarTudo")
-    public List<Produto> listarTodos() {
-        return repositorioProduto.findAll();
+    public List<Produto> buscarOrdem() {
+        return repositorioProduto.buscarOrdem();
 
     }
 
@@ -53,6 +52,15 @@ public class ControllerProduto {
     @PostMapping(path = "/")
     public Produto salvarProduto(@RequestBody Produto produto) {
         return repositorioProduto.save(produto);
+
+    }
+
+    // Mexa
+    @PostMapping(path = "/novoLote")
+    Optional<Produto> acrescentarLote(@RequestBody Produto produto) {
+        return repositorioProduto.acrescentarLote(produto.getIdProduto(), produto.getProduto(), produto.getQuantidade(),
+                produto.getValidade(),
+                produto.getCusto(), produto.getPreco(), produto.getLote());
 
     }
 
@@ -85,6 +93,13 @@ public class ControllerProduto {
             ResponseEntity.notFound().build();
         }
 
+    }
+
+    @DeleteMapping(path = "/{id}/{lote}")
+    public void excluirIdLote(@PathVariable Integer id, @PathVariable String lote) {
+        System.out.println(id);
+        System.out.println(lote);
+        repositorioProduto.excluirIdLote(id, lote);
     }
 
     // @GetMapping(path = "/buscarUltimoID")
