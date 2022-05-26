@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.example.demo.entity.Produto;
 import com.example.demo.repository.RepositorioProduto;
@@ -26,14 +25,8 @@ public class ControllerProduto {
 
     @GetMapping(path = "/buscarTudo")
     public List<Produto> buscarOrdem() {
+        System.out.println(repositorioProduto.buscarOrdem());
         return repositorioProduto.buscarOrdem();
-
-    }
-
-    @GetMapping(path = "/buscarNome")
-    public List<Produto> findByProduto(String produto) {
-        System.out.println(produto);
-        return repositorioProduto.findByProduto(produto);
 
     }
 
@@ -45,22 +38,14 @@ public class ControllerProduto {
     }
 
     @GetMapping(path = "/{id}")
-    public Optional<Produto> buscaId(@PathVariable Integer id) {
-        return repositorioProduto.findById(id);
+    List<Produto> trazerProduto(@PathVariable Integer id) {
+        return repositorioProduto.trazerProduto(id);
     }
 
     @PostMapping(path = "/")
     public Produto salvarProduto(@RequestBody Produto produto) {
+        System.out.print("Foi");
         return repositorioProduto.save(produto);
-
-    }
-
-    // Mexa
-    @PostMapping(path = "/novoLote")
-    Optional<Produto> acrescentarLote(@RequestBody Produto produto) {
-        return repositorioProduto.acrescentarLote(produto.getIdProduto(), produto.getProduto(), produto.getQuantidade(),
-                produto.getValidade(),
-                produto.getCusto(), produto.getPreco(), produto.getLote());
 
     }
 
@@ -74,7 +59,6 @@ public class ControllerProduto {
             produtoAtual.setValidade(produto.getValidade());
             produtoAtual.setCusto(produto.getCusto());
             produtoAtual.setPreco(produto.getPreco());
-            produtoAtual.setLote(produto.getLote());
 
             repositorioProduto.save(produtoAtual);
 
@@ -84,26 +68,8 @@ public class ControllerProduto {
     }
 
     @DeleteMapping(path = "/{id}")
-    public void deletarProduto(@PathVariable Integer id) {
-        var resp = repositorioProduto.findById(id);
-
-        if (resp.isPresent()) {
-            repositorioProduto.deleteById(id);
-        } else {
-            ResponseEntity.notFound().build();
-        }
+    public void excluirProduto(@PathVariable Integer id) {
+        repositorioProduto.excluirProduto(id);
 
     }
-
-    @DeleteMapping(path = "/{id}/{lote}")
-    public void excluirIdLote(@PathVariable Integer id, @PathVariable String lote) {
-        System.out.println(id);
-        System.out.println(lote);
-        repositorioProduto.excluirIdLote(id, lote);
-    }
-
-    // @GetMapping(path = "/buscarUltimoID")
-    // public List<Produto> listarUltimoID()
-    // return repositorioProduto.proximoId();
-
 }

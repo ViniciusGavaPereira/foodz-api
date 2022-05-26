@@ -18,22 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.entity.Usuario;
 import com.example.demo.repository.RepositorioUsuario;
 
-
 @RestController
 @RequestMapping(path = "/usuario")
 public class ControllerUsuario {
 
     @Autowired
     private RepositorioUsuario repositorioUsuario;
- 
+
     @PostMapping(path = "/login")
     public Optional<Usuario> login(@RequestBody Usuario usuario) {
         return repositorioUsuario.login(usuario.getLogin(), usuario.getSenha());
 
     }
 
-
-    //Arrumar 
+    // Arrumar
     @GetMapping(path = "/buscarTudo")
     public List<Usuario> listarTodos() {
         return repositorioUsuario.findAll();
@@ -80,5 +78,16 @@ public class ControllerUsuario {
 
     }
 
+    @GetMapping(path = "login/{login}")
+    public List<Usuario> buscarLogin(@PathVariable String login) {
+        return repositorioUsuario.buscarLogin(login);
+
+    }
+
+    @DeleteMapping(path = "login/{login}")
+    public void excluirLogin(@PathVariable String login) {
+        repositorioUsuario.excluirLogin(login);
+
+    }
 
 }
